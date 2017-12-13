@@ -8,6 +8,7 @@ import { NotificationPage } from '../pages/notification/notification';
 import { HomePage} from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
 import { TabsPage } from '../pages/tabs/tabs';
+import { Tabs } from 'ionic-angular/components/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,7 @@ export class MyApp {
 
   @ViewChild('NAV') nav: Nav;
 
-  rootPage:any = HomePage;
+  rootPage:any = TabsPage;
   //rootPage:any = TabsPage;
   
 
@@ -25,12 +26,12 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 
     this.pages = [
-      { titulo: 'Inicio',         component: HomePage, icon:'home'},
+      { titulo: 'Inicio',         component: TabsPage, icon:'home'},
       { titulo: 'Mi ubicación',   component: MyLocationPage, icon:'md-man'},
       { titulo: 'Líneas',         component: LinesPage, icon:'md-bus'},
       { titulo: 'Notificaciones', component: NotificationPage, icon:'md-alert'},
       { titulo: 'Acerca de',      component: AboutPage, icon:'md-people'},
-      { titulo: 'tabs',           component: TabsPage, icon:'md-map'}
+      // { titulo: 'tabs',           component: TabsPage, icon:'md-map'}
     ];
 
     platform.ready().then(() => {
