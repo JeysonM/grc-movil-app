@@ -22,14 +22,14 @@
   <ion-fab center bottom>
     <button ion-fab color="light"><ion-icon name="md-arrow-dropup"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-fab><ion-icon name="md-man"></ion-icon></button>
+      <button ion-fab><ion-icon name="md-navigate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="top">
-      <button ion-fab><ion-icon name="md-pin"></ion-icon></button>
+      <button (click)="getPosition()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
 
     </ion-fab-list>
     <ion-fab-list side="right">
-      <button ion-fab><ion-icon name="md-bus"></ion-icon></button>
+      <button ion-fab><ion-icon name="md-remove-circle"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
