@@ -1,6 +1,6 @@
 {
   "name": "grc-movil-app",
-  "app_id": "",
+  "app_id": "bc605af0",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
