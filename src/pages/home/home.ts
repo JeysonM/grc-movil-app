@@ -24,13 +24,11 @@ export class HomePage {
     }
   
     getPosition():any{
-      let loader = this.loadingCtrl.create({
-        content: "Espera por favor...",
-      });
+      
 
       this.geolocation.getCurrentPosition()
       .then(response => {
-        loader.dismiss();
+        
         this.loadMap(response);
         
       })
@@ -40,6 +38,11 @@ export class HomePage {
     }
   
     loadMap(position: Geoposition){
+
+      let loader = this.loadingCtrl.create({
+        content: "Espera por favor...",
+      });
+      
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
       console.log(latitude, longitude);
@@ -55,6 +58,8 @@ export class HomePage {
         center: myLatLng,
         zoom: 15
       });
+      
+      loader.dismiss();
   
       google.maps.event.addListenerOnce(this.map, 'idle', () => {
         let marker = new google.maps.Marker({
