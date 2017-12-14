@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { LoadingController } from 'ionic-angular';
 
 declare var google;
 
@@ -14,7 +15,8 @@ export class HomePage {
   
     constructor(
       private navCtrl: NavController,
-      private geolocation: Geolocation
+      private geolocation: Geolocation,
+      public loadingCtrl: LoadingController
     ) {}
   
     ionViewDidLoad(){
@@ -22,9 +24,14 @@ export class HomePage {
     }
   
     getPosition():any{
+      let loader = this.loadingCtrl.create({
+        content: "Espera por favor...",
+      });
+
       this.geolocation.getCurrentPosition()
       .then(response => {
         this.loadMap(response);
+        loader.dismiss();
       })
       .catch(error =>{
         console.log(error);
@@ -45,7 +52,7 @@ export class HomePage {
       // create map
       this.map = new google.maps.Map(mapEle, {
         center: myLatLng,
-        zoom: 12
+        zoom: 17
       });
   
       google.maps.event.addListenerOnce(this.map, 'idle', () => {
