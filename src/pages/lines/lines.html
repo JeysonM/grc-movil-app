@@ -18,4 +18,15 @@
 
 <ion-content padding>
 
+  <ion-list>
+      <ion-item *ngFor = "let line of lines">
+          <ion-thumbnail item-start>
+              <img src="/assets/imgs/logo.png">
+            </ion-thumbnail>
+            <h1>{{line.name}}</h1>
+            <h2><ion-icon item-left name="md-time"></ion-icon>{{line.frequency}} min</h2>
+            <h2><ion-icon item-left name="md-color-palette"></ion-icon>{{line.color}}</h2>
+      </ion-item>  
+  </ion-list>
+
 </ion-content>
