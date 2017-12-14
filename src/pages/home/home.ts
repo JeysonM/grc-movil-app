@@ -30,8 +30,9 @@ export class HomePage {
 
       this.geolocation.getCurrentPosition()
       .then(response => {
-        this.loadMap(response);
         loader.dismiss();
+        this.loadMap(response);
+        
       })
       .catch(error =>{
         console.log(error);
@@ -52,7 +53,7 @@ export class HomePage {
       // create map
       this.map = new google.maps.Map(mapEle, {
         center: myLatLng,
-        zoom: 17
+        zoom: 15
       });
   
       google.maps.event.addListenerOnce(this.map, 'idle', () => {
