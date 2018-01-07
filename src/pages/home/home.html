@@ -3,12 +3,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Contact GDR</ion-title>
+    <ion-title>GRC</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <div id="map"></div>
+  <pickup [map]="map" [isPinSet]="isMapIdle"></pickup>
   <!-- <ion-fab top right edge>
     <button ion-fab mini><ion-icon name="add"></ion-icon></button>
     <ion-fab-list>
@@ -20,16 +21,16 @@
   </ion-fab> -->
 
   <ion-fab center bottom>
-    <button ion-fab color="light"><ion-icon name="md-arrow-dropup"></ion-icon></button>
+    <button ion-fab ><ion-icon name="md-arrow-dropup"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-fab><ion-icon name="md-navigate"></ion-icon></button>
+      <button color="secondary" ion-fab><ion-icon name="md-navigate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="top">
-      <button (click)="getPosition()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
+      <button color="calm"(click)="getPosition()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
 
     </ion-fab-list>
     <ion-fab-list side="right">
-      <button ion-fab><ion-icon name="md-remove-circle"></ion-icon></button>
+      <button color="danger" ion-fab><ion-icon name="md-remove"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

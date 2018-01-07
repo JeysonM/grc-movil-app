@@ -16,6 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { RestProvider } from '../providers/rest/rest';
 import {HttpClientModule} from '@angular/common/http';
+import { PickupComponent } from '../components/pickup/pickup';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {HttpClientModule} from '@angular/common/http';
     MyLocationPage,
     LinesPage,
     NotificationPage,
-    TabsPage
+    TabsPage,
+    PickupComponent
   ],
   imports: [
     BrowserModule,
