@@ -19,6 +19,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { PickupComponent } from '../components/pickup/pickup';
 import { MapComponent } from '../components/map/map';
 
+import { GoogleMaps } from '@ionic-native/google-maps';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -52,6 +54,7 @@ import { MapComponent } from '../components/map/map';
     StatusBar,
     SplashScreen,
     Geolocation,
+    GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider
   ]

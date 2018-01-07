@@ -18,10 +18,11 @@
 </ion-header>
 
 <ion-content>
-  <div id="map"></div>
+  <!-- <div id="map"></div> -->
   <!-- <div class="map-wrapper">
       <map [isPickupRequested]="isPickupRequested"></map>
   </div> -->
+  <div id="map_canvas"></div>
   
   <pickup #map [map]="map" [isPinSet]="isMapIdle"></pickup>
   <!-- <ion-fab top right edge>
@@ -41,7 +42,7 @@
       <button [hidden]="!isPickupRequested" color="calm"(click)="cancelPickup()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="top">
-      <button color="calm"(click)="getPosition()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
+      <button color="calm"(click)="getPositionCenter()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="right">
       <button color="danger" ion-fab><ion-icon name="md-remove"></ion-icon></button>
