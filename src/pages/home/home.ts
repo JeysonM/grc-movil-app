@@ -178,16 +178,16 @@ export class HomePage {
     //   //loading.dismiss();
     // }
 
-    addMapEventsListeners(){
-      google.maps.event.addListenerOnce(this.map, 'dragstart', () => {
-        this.isMapIdle = false;
+    // addMapEventsListeners(){
+    //   google.maps.event.addListenerOnce(this.map, 'dragstart', () => {
+    //     this.isMapIdle = false;
         
-      })
+    //   })
 
-      google.maps.event.addListenerOnce(this.map, 'idle', () => {
-        this.isMapIdle = true;
-      })
-    }
+    //   google.maps.event.addListenerOnce(this.map, 'idle', () => {
+    //     this.isMapIdle = true;
+    //   })
+    // }
 
 
 
