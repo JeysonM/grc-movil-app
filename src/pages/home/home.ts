@@ -12,22 +12,34 @@ declare var google;
 export class HomePage {
 
   map: any;
+  public isPickupRequested: boolean;
+
   public isMapIdle:boolean;
   
     constructor(
       public navCtrl: NavController,
       private geolocation: Geolocation,
       public load: LoadingController
-    ) {}
+    ) {
+      this.isPickupRequested = false;
+    }
 
-    
-    
-  
+
     ionViewDidLoad(){
       
       this.getPosition();
       //this.addMapEventsListeners();
     }
+
+    confirmPickup(){
+      this.isPickupRequested = true;
+    }
+
+    cancelPickup(){
+      this.isPickupRequested = false;
+    }
+  
+   
   
     getPosition():any{
       let loading = this.load.create({
@@ -70,11 +82,14 @@ export class HomePage {
           title: 'Hello World!',
           icon: '/assets/icon/pin-init.png'
         });
-        
         mapEle.classList.add('show-map');
         
       });
       //loading.dismiss();
+    }
+
+    showMap(){
+      
     }
 
     addMapEventsListeners(){
@@ -87,5 +102,8 @@ export class HomePage {
         this.isMapIdle = true;
       })
     }
+
+
+
 
 }

@@ -17,6 +17,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { RestProvider } from '../providers/rest/rest';
 import {HttpClientModule} from '@angular/common/http';
 import { PickupComponent } from '../components/pickup/pickup';
+import { MapComponent } from '../components/map/map';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PickupComponent } from '../components/pickup/pickup';
     LinesPage,
     NotificationPage,
     TabsPage,
-    PickupComponent
+    PickupComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
