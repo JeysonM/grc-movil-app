@@ -23,6 +23,8 @@
       <map [isPickupRequested]="isPickupRequested"></map>
   </div> -->
   <div id="map_canvas"></div>
+  <!-- <span>Origen: {{originAndDestiny.origin.latitude}} | {{originAndDestiny.origin.longitude}}</span>
+  <span>Destino: {{originAndDestiny.destiny.latitude}} | {{originAndDestiny.destiny.longitude}}</span> -->
   
   <pickup #map [map]="map" [isPinSet]="isMapIdle"></pickup>
   <!-- <ion-fab top right edge>
@@ -38,11 +40,11 @@
   <ion-fab center bottom>
     <button ion-fab ><ion-icon name="md-arrow-dropup"></ion-icon></button>
     <ion-fab-list side="left">
-      <button [hidden]="isPickupRequested" color="secondary" (click)="confirmPickup()" ion-fab><ion-icon name="md-navigate"></ion-icon></button>
-      <button [hidden]="!isPickupRequested" color="calm"(click)="cancelPickup()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
+      <button [hidden]="isPickupRequested" color="secondary" (click)="confirmPickup(); addOriginLocation();" ion-fab><ion-icon name="md-navigate"></ion-icon></button>
+      <button [hidden]="!isPickupRequested" color="calm"(click)="cancelPickup(); addDestinyLocation();" ion-fab><ion-icon name="md-locate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="top">
-      <button color="calm"(click)="getPositionCenter()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
+      <button color="calm"(click)="watchPositionCenter()" ion-fab><ion-icon name="md-locate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="right">
       <button color="danger" ion-fab><ion-icon name="md-remove"></ion-icon></button>

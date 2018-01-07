@@ -3,6 +3,8 @@ import { IonicPage, NavController,LoadingController, Platform } from 'ionic-angu
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { PickupComponent } from '../../components/pickup/pickup';
 import { Location } from '../../models/location';
+import { PairLocation } from '../../models/pairLocation';
+
 import {
   GoogleMaps,
   GoogleMap,
@@ -12,6 +14,7 @@ import {
   MarkerOptions,
   Marker
 } from '@ionic-native/google-maps';
+
 
 declare var google;
 
@@ -24,6 +27,7 @@ export class HomePage {
 
   map: any;
   location: Location = new Location();
+  originAndDestiny: PairLocation = new PairLocation();
   watch: any;
   marker: Marker;
   public isPickupRequested: boolean;
@@ -45,6 +49,13 @@ export class HomePage {
       this.getPositionCenter();
       this.watchPositionCenter();
       
+    }
+
+    addOriginLocation(){
+      this.originAndDestiny.origin = location;
+    }
+    addDestinyLocation(){
+      this.originAndDestiny.destiny = location;
     }
   
     getPositionCenter(){
@@ -89,17 +100,19 @@ export class HomePage {
         .then(() => {
           console.log('Map is ready!');
 
+          //marker Options
+          let markerOptions: MarkerOptions = {
+            title: 'GRC APP save',
+            icon: 'assets/icon/pin-init.png',
+            animation: 'BOUNCE',
+            position: {
+              lat: this.location.latitude,
+              lng: this.location.longitude
+            },
+            draggable: true
+          }
           // Now you can use all methods safely.
-          this.map.addMarker({
-              title: 'GRC APP',
-              icon: 'blue',
-              animation: 'BOUNCE',
-              position: {
-                lat: this.location.latitude,
-                lng: this.location.longitude
-              },
-              draggable: true
-            })
+          this.map.addMarker(markerOptions)
             .then(marker => {
               this.marker = marker;
 
@@ -119,8 +132,30 @@ export class HomePage {
         });
     }
 
+    addMarkerToMap(){
 
-//###################################################################################################
+      let markerOptions2: MarkerOptions = {
+        title: 'Origin',
+        icon: 'assets/icon/pin-init.png',
+        animation: 'BOUNCE',
+        position: {
+          lat: this.location.latitude,
+          lng: this.location.longitude
+        },
+        draggable: true
+      }
+
+      this.map.addMarker(markerOptions2)
+            .then(marker => {
+              this.marker = marker;
+
+              marker.on(GoogleMapsEvent.MARKER_CLICK)
+                .subscribe(() => {
+                  alert('Origin');
+                });
+            });
+    }
+    
     confirmPickup(){
       this.isPickupRequested = true;
     }
@@ -128,67 +163,5 @@ export class HomePage {
     cancelPickup(){
       this.isPickupRequested = false;
     }
-  
-   
-  
-    // getPosition():any{
-    //   let loading = this.load.create({
-    //     content: "Por favor espera...",
-    //   });
-    //   loading.present();
-    //   this.geolocation.getCurrentPosition()
-    //   .then(response => {
-        
-    //     this.loadMap(response);
-    //     loading.dismiss();
-    //   })
-    //   .catch(error =>{
-    //     console.log(error);
-    //   })
-    // }
-  
-    // loadMap(position: Geoposition){
-
-    //   let latitude = position.coords.latitude;
-    //   let longitude = position.coords.longitude;
-    //   console.log(latitude, longitude);
-      
-    //   // create a new map by passing HTMLElement
-    //   let mapEle: HTMLElement = document.getElementById('map');
-  
-    //   // create LatLng object
-    //   let myLatLng = {lat: latitude, lng: longitude};
-    //   // create map
-    //   this.map = new google.maps.Map(mapEle, {
-    //     center: myLatLng,
-    //     zoom: 15
-    //   });
-
-    //   google.maps.event.addListenerOnce(this.map, 'idle', () => {
-    //     let marker = new google.maps.Marker({
-    //       position: myLatLng,
-    //       animation: google.maps.Animation.BOUNCE,
-    //       map: this.map,
-    //       title: 'Hello World!',
-    //       icon: '/assets/icon/pin-init.png'
-    //     });
-    //     mapEle.classList.add('show-map');
-        
-    //   });
-    //   //loading.dismiss();
-    // }
-
-    // addMapEventsListeners(){
-    //   google.maps.event.addListenerOnce(this.map, 'dragstart', () => {
-    //     this.isMapIdle = false;
-        
-    //   })
-
-    //   google.maps.event.addListenerOnce(this.map, 'idle', () => {
-    //     this.isMapIdle = true;
-    //   })
-    // }
-
-
 
 }

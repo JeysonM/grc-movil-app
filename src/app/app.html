@@ -1,7 +1,7 @@
 <ion-menu [content]="NAV">
     <ion-content>
         <ion-list>
-            <img src="/assets/images/cover.jpg" alt="">
+            <img src="assets/images/cover.jpg" alt="">
             <button ion-item *ngFor="let page of pages" (click)="goToPage(page.component)" menuClose>
                 <ion-icon item-left name="{{ page.icon }}"></ion-icon>
                 {{ page.titulo }}
