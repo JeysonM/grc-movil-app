@@ -1,13 +1,14 @@
 <ion-header>
   <ion-navbar color="primary">
+
+    <button ion-button [hidden]="isPickupRequested" menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
     <ion-buttons start>
-        <button ion-button [hidden]="isPickupRequested" menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
         <button ion-button [hidden]="!isPickupRequested" (click)="cancelPickup()">
              Cancelar
         </button>
-
     </ion-buttons>
     
     <ion-title>
@@ -49,14 +50,15 @@
   <ion-fab center bottom>
     <button ion-fab ><ion-icon name="md-arrow-dropup"></ion-icon></button>
     <ion-fab-list side="left">
-      <button [hidden]="isPickupRequested" color="secondary" (click)="confirmPickup(); addMarkerToTap();" ion-fab><ion-icon name="md-navigate"></ion-icon></button>
-      <button [hidden]="!isPickupRequested" color="calm" (click)="cancelPickup(); addMarkerToTap(); " ion-fab><ion-icon name="md-locate"></ion-icon></button>
+      <!-- <button [hidden]="isPickupRequested" color="secondary" (click)="confirmPickup(); addMainMarker();" ion-fab><ion-icon name="md-pin"></ion-icon></button>
+      <button [hidden]="!isPickupRequested" color="calm" (click)="cancelPickup();" ion-fab><ion-icon name="md-pin"></ion-icon></button> -->
+      <button [hidden]="isPickupRequested" color="secondary" (click)="addMainMarker();" ion-fab><ion-icon name="md-pin"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="top">
-      <button color="calm" ion-fab><ion-icon name="md-locate"></ion-icon></button>
+      <button color="calm" ion-fab><ion-icon name="ios-navigate"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="right">
-      <button color="danger" (click)="cleanLocation()" ion-fab><ion-icon name="md-remove"></ion-icon></button>
+      <button color="danger" (click)="resetMap()" ion-fab><ion-icon name="md-remove"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

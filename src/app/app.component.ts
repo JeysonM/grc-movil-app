@@ -26,7 +26,7 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 
     this.pages = [
-      { titulo: 'Inicio',         component: TabsPage, icon:'home'},
+      { titulo: 'Mapa',         component: TabsPage, icon:'md-map'},
       { titulo: 'Mi ubicación',   component: MyLocationPage, icon:'md-man'},
       { titulo: 'Líneas',         component: LinesPage, icon:'md-bus'},
       { titulo: 'Notificaciones', component: NotificationPage, icon:'md-alert'},

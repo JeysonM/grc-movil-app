@@ -31,7 +31,9 @@ export class HomePage {
   watch: any;
   marker: Marker;
   public isPickupRequested: boolean;
-
+  public isMainMarkerActivated: boolean;
+  public isTwoMarkers: boolean;
+  public countMarkers: number;
   public isMapIdle:boolean;
   
     constructor(
@@ -41,27 +43,18 @@ export class HomePage {
       private googleMaps: GoogleMaps
     ) {
       this.isPickupRequested = false;
+      this.isMainMarkerActivated = false;
+      this.isTwoMarkers = false;
+      this.countMarkers = 1;
     }
 
 
     ionViewDidLoad() {
     
       this.getPositionCenter();
+      
       //this.watchPositionCenter();
       
-    }
-
-    addOriginLocation(coord){
-      //this.watchPositionCenter();
-      this.originAndDestiny.setOrigin(coord);
-    }
-    addDestinyLocation(coord){
-      //this.watchPositionCenter();
-      this.originAndDestiny.setDestiny(coord);
-    }
-
-    cleanLocation(){
-      this.originAndDestiny.cleanValues();
     }
   
     getPositionCenter(){
@@ -113,80 +106,88 @@ export class HomePage {
 
       this.map = GoogleMaps.create('map_canvas', mapOptions);
 
-      // Wait the MAP_READY before using any methods.
       this.map.one(GoogleMapsEvent.MAP_READY)
         .then(() => {
           console.log('Map is ready!');
 
-          //marker Options
-          let markerOptions: MarkerOptions = {
-            title: 'GRC APP Multiple',
-            icon: 'assets/icon/pin-init.png',
-            animation: 'BOUNCE',
-            position: {
-              lat: this.location.latitude,
-              lng: this.location.longitude
-            },
-            draggable: true
-          }
-          // Now you can use all methods safely.
-          this.map.addMarker(markerOptions)
-            .then(marker => {
-              this.marker = marker;
-
-              marker.on(GoogleMapsEvent.MARKER_DRAG_END)
-              .subscribe((marker) => {
-                console.log(marker);
-                this.location.latitude = marker.getPosition().lat;
-                this.location.longitude = marker.getPosition().lng;
-                marker.setTitle(this.location.latitude+","+this.location.longitude);
-                marker.showInfoWindow();
-                //this.addMarkerToTap();
-              });
-
-              marker.on(GoogleMapsEvent.MARKER_CLICK)
-                .subscribe(() => {
-                  //this.addOriginLocation(this.location);
-                  // this.addDestinyLocation(this.location);
-                  //alert(this.location.latitude+","+this.location.longitude);
-                  //this.addMarkerToTap(this.location);
-                });
-            });
+          this.addMainMarker();
 
         });
     }
 
-    addMarkerToTap(){
-      this.watchPositionCenter();
+    addMainMarker(){
+      if(this.isMainMarkerActivated != true){
+
+        this.getPositionCenter();
+        this.activateMarker();
+        let markerOptions: MarkerOptions = {
+          title: 'GRC APP',
+          icon: 'blue',
+          animation: 'BOUNCE',
+          position: {
+            lat: this.location.latitude,
+            lng: this.location.longitude
+          },
+          draggable: true
+        }
+  
+        this.map.addMarker(markerOptions)
+          .then(marker => {
+            this.marker = marker;
+  
+            marker.on(GoogleMapsEvent.MARKER_DRAG_END)
+            .subscribe(() => {
+              console.log(marker);
+            });
+  
+            marker.on(GoogleMapsEvent.MARKER_CLICK)
+              .subscribe(() => {
+                this.location.latitude = marker.getPosition().lat;
+                this.location.longitude = marker.getPosition().lng;
+                if(this.isTwoMarkers != true){
+                  this.addMarkerToTap(this.location.latitude,this.location.longitude);
+                  this.increaseMarkerCounter();
+                }
+              });
+        });
+      }
+      
+    }
+    
+
+    addMarkerToTap(lati,longi){
+
       let markerOptions2: MarkerOptions = {
         title: 'Origin',
         icon: 'assets/icon/pin-init.png',
-        animation: google.maps.Animation.BOUNCE,
+        animation: 'BOUNCE',
         position: {
-          lat: this.location.latitude,
-          lng: this.location.longitude
-        },
-        draggable: true
+          lat: lati,
+          lng: longi
+        }
       }
 
       this.map.addMarker(markerOptions2)
             .then(marker => {
               this.marker = marker;
-              marker.addEventListener(GoogleMapsEvent.MARKER_DRAG_END, function(marker) {
-                marker.getPosition(function(latLng) {
-                  marker.setTitle(latLng.toUrlValue());
-                  marker.showInfoWindow();
-                });
-              });
-
-              // marker.on(GoogleMapsEvent.MARKER_DRAG_END)
-              //   .subscribe((marker) => {
-              //     this.location.latitude = marker.getPosition().lat;
-              //     this.location.longitude = marker.getPosition().lng;
-              //     marker.title(this.location.latitude+","+this.location.longitude);
-              //     marker.showInfoWindow();
-              //   });
+              marker.setTitle(lati+','+longi);
             });
+    }
+
+
+    resetMap(){
+      this.map.clear();
+      this.deactivateMarker();
+      this.getPositionCenter();
+      this.deactivateMarkerCounter();
+    }
+
+    activateMarker(){
+      this.isMainMarkerActivated = true;
+    }
+
+    deactivateMarker(){
+      this.isMainMarkerActivated = false;
     }
     
     confirmPickup(){
@@ -195,6 +196,38 @@ export class HomePage {
 
     cancelPickup(){
       this.isPickupRequested = false;
+    }
+
+    addOriginLocation(coord){
+      //this.watchPositionCenter();
+      this.originAndDestiny.setOrigin(coord);
+    }
+    addDestinyLocation(coord){
+      //this.watchPositionCenter();
+      this.originAndDestiny.setDestiny(coord);
+    }
+
+    cleanLocation(){
+      this.originAndDestiny.cleanValues();
+    }
+
+    activateMarkerCounter(){
+      this.isTwoMarkers = true;
+    }
+
+    deactivateMarkerCounter(){
+      this.isTwoMarkers = false;
+      this.countMarkers = 1;
+    }
+
+    increaseMarkerCounter(){
+      if(this.countMarkers != 2){
+        this.countMarkers = this.countMarkers + 1;
+      }
+      else{
+        this.activateMarkerCounter();
+      }
+      
     }
 
 }

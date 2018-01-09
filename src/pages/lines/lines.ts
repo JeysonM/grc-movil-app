@@ -26,23 +26,11 @@ export class LinesPage {
               public navParams: NavParams, 
               public restProvider: RestProvider,
               public loadingCtrl: LoadingController) {
-    // console.log('Hello RestServiceProvider Provider');
     this.lines = this.restProvider.getLines();
   }
-  //
 
   ionViewDidLoad() {
-   // this.getLines();
   }
-
-  // getLines() {
-  //   this.restProvider.getLines()
-  //   .then(data => {
-  //     this.presentLoading();
-  //     this.lines = data;
-  //     console.log(this.lines);
-  //   });
-  // }
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
