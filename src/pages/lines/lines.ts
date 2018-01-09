@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { RestProvider } from '../../providers/rest/rest';
 import { LoadingController } from 'ionic-angular';
+import { Line } from '../../models/line';
 
 /**
  * Generated class for the LinesPage page.
@@ -19,30 +20,29 @@ import { LoadingController } from 'ionic-angular';
 })
 export class LinesPage {
 
-  lines: any;
-
+  lines: Line[];
+  searchQuery: String;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public restProvider: RestProvider,
               public loadingCtrl: LoadingController) {
     // console.log('Hello RestServiceProvider Provider');
-    this.getLines();
+    this.lines = this.restProvider.getLines();
   }
   //
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LinesPage');
+   // this.getLines();
   }
 
-  getLines() {
-
-    this.restProvider.getLines()
-    .then(data => {
-      this.presentLoading();
-      this.lines = data;
-      console.log(this.lines);
-    });
-  }
+  // getLines() {
+  //   this.restProvider.getLines()
+  //   .then(data => {
+  //     this.presentLoading();
+  //     this.lines = data;
+  //     console.log(this.lines);
+  //   });
+  // }
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
@@ -50,6 +50,11 @@ export class LinesPage {
       duration: 1000
     });
     loader.present();
+  }
+
+  updateLines(){
+    console.log(this.searchQuery);
+    this.lines = this.restProvider.filterLines(this.searchQuery);
   }
 
   
