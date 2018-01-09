@@ -41,7 +41,7 @@ export class PickupComponent {
       map: this.map,
       animation: google.maps.Animation.BOUNCE,
       position: this.map.getCenter(),
-      icon: '/assets/icon/pin-init.png'
+      icon: 'assets/icon/pin-init.png'
     })
 
     setTimeout( () => {

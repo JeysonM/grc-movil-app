@@ -47,15 +47,21 @@ export class HomePage {
     ionViewDidLoad() {
     
       this.getPositionCenter();
-      this.watchPositionCenter();
+      //this.watchPositionCenter();
       
     }
 
-    addOriginLocation(){
-      this.originAndDestiny.origin = location;
+    addOriginLocation(coord){
+      //this.watchPositionCenter();
+      this.originAndDestiny.setOrigin(coord);
     }
-    addDestinyLocation(){
-      this.originAndDestiny.destiny = location;
+    addDestinyLocation(coord){
+      //this.watchPositionCenter();
+      this.originAndDestiny.setDestiny(coord);
+    }
+
+    cleanLocation(){
+      this.originAndDestiny.cleanValues();
     }
   
     getPositionCenter(){
@@ -83,6 +89,18 @@ export class HomePage {
     loadMap(){
 
       let mapOptions: GoogleMapOptions = {
+        gestures: {
+          scroll: true,
+          tilt: true,
+          rotate: true,
+          zoom: true
+        },
+        controls: {
+          compass: true,
+          myLocationButton: true,
+          indoorPicker: true,
+          zoom: true
+        },
         camera: {
           target: {
             lat: this.location.latitude,
@@ -102,7 +120,7 @@ export class HomePage {
 
           //marker Options
           let markerOptions: MarkerOptions = {
-            title: 'GRC APP save',
+            title: 'GRC APP Multiple',
             icon: 'assets/icon/pin-init.png',
             animation: 'BOUNCE',
             position: {
@@ -121,23 +139,29 @@ export class HomePage {
                 console.log(marker);
                 this.location.latitude = marker.getPosition().lat;
                 this.location.longitude = marker.getPosition().lng;
+                marker.setTitle(this.location.latitude+","+this.location.longitude);
+                marker.showInfoWindow();
+                //this.addMarkerToTap();
               });
 
               marker.on(GoogleMapsEvent.MARKER_CLICK)
                 .subscribe(() => {
-                  alert('clicked');
+                  //this.addOriginLocation(this.location);
+                  // this.addDestinyLocation(this.location);
+                  //alert(this.location.latitude+","+this.location.longitude);
+                  //this.addMarkerToTap(this.location);
                 });
             });
 
         });
     }
 
-    addMarkerToMap(){
-
+    addMarkerToTap(){
+      this.watchPositionCenter();
       let markerOptions2: MarkerOptions = {
         title: 'Origin',
         icon: 'assets/icon/pin-init.png',
-        animation: 'BOUNCE',
+        animation: google.maps.Animation.BOUNCE,
         position: {
           lat: this.location.latitude,
           lng: this.location.longitude
@@ -148,11 +172,20 @@ export class HomePage {
       this.map.addMarker(markerOptions2)
             .then(marker => {
               this.marker = marker;
-
-              marker.on(GoogleMapsEvent.MARKER_CLICK)
-                .subscribe(() => {
-                  alert('Origin');
+              marker.addEventListener(GoogleMapsEvent.MARKER_DRAG_END, function(marker) {
+                marker.getPosition(function(latLng) {
+                  marker.setTitle(latLng.toUrlValue());
+                  marker.showInfoWindow();
                 });
+              });
+
+              // marker.on(GoogleMapsEvent.MARKER_DRAG_END)
+              //   .subscribe((marker) => {
+              //     this.location.latitude = marker.getPosition().lat;
+              //     this.location.longitude = marker.getPosition().lng;
+              //     marker.title(this.location.latitude+","+this.location.longitude);
+              //     marker.showInfoWindow();
+              //   });
             });
     }
     
