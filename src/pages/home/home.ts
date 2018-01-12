@@ -110,7 +110,15 @@ export class HomePage {
         .then(() => {
           console.log('Map is ready!');
 
-          this.addMainMarker();
+          this.map.on(GoogleMapsEvent.MAP_LONG_CLICK)
+          .subscribe(
+            (data) => {
+                //data.latLng.lat();  
+                //this.addMainMarker();
+                alert('MAP_LONG_CLICK');
+                //alert(data.lat +','+data.lng);
+            })
+          //this.addMainMarker();
 
         });
     }
@@ -121,7 +129,7 @@ export class HomePage {
         this.getPositionCenter();
         this.activateMarker();
         let markerOptions: MarkerOptions = {
-          title: 'GRC APP',
+          title: 'GRC APP version 2.7',
           icon: 'blue',
           animation: 'BOUNCE',
           position: {
