@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Line } from '../../models/line';
 import { isArray } from 'ionic-angular/util/util';
+import { Checkpoint } from '../../models/checkpoint';
 
 /*
   Generated class for the RestProvider provider.
@@ -16,6 +17,7 @@ export class RestProvider {
   
   restProvider: any;
   lines: Line[] = new Array();
+  checkpoints: Checkpoint[] = new Array();
 
   constructor(public http: HttpClient) {
     console.log('Hello RestProvider Provider');
@@ -24,6 +26,16 @@ export class RestProvider {
   receiveLines() {
     return new Promise(resolve => {
       this.http.get(this.apiUrl+'/lines').subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  receiveCheckpointsFromLine(line_id) {
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'/lines/'+line_id+"/points").subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);
@@ -43,6 +55,20 @@ export class RestProvider {
       
     });
     return this.lines;
+  }
+
+  getCheckpointsFromLine(line_id) {
+    this.receiveCheckpointsFromLine(line_id)
+    .then(data => {
+      if(isArray(data)){
+        data.forEach(checkpoint => {
+          console.log(checkpoint);
+          this.checkpoints.push(checkpoint);
+        });
+      }
+      
+    });
+    return this.checkpoints;
   }
 
   filterLines(searchQuery: String): Line[]{

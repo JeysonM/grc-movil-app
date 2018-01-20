@@ -12,11 +12,22 @@ import {
   GoogleMapOptions,
   CameraPosition,
   MarkerOptions,
-  Marker
+  Marker,
+  Polyline	
 } from '@ionic-native/google-maps';
+import { RestProvider } from '../../providers/rest/rest';
+import { Checkpoint } from '../../models/checkpoint';
 
 
 declare var google;
+var HND_AIR_PORT = {lat: -17.393603098541814, lng: -66.27667665481567};
+      var SFO_AIR_PORT = {lat: -17.393029755856787, lng: -66.2700891494751};
+      var HNL_AIR_PORT = {lat: -17.39291713476104, lng: -66.26922011375427};
+      var AIR_PORTS = [
+        HND_AIR_PORT,
+        HNL_AIR_PORT,
+        SFO_AIR_PORT
+      ];
 
 @IonicPage()
 @Component({
@@ -30,6 +41,7 @@ export class HomePage {
   originAndDestiny: PairLocation = new PairLocation();
   watch: any;
   marker: Marker;
+  checkpoints: Checkpoint[];
   public isPickupRequested: boolean;
   public isMainMarkerActivated: boolean;
   public isTwoMarkers: boolean;
@@ -40,17 +52,24 @@ export class HomePage {
       public navCtrl: NavController,
       private geolocation: Geolocation,
       public load: LoadingController,
-      private googleMaps: GoogleMaps
+      private googleMaps: GoogleMaps,
+      public restProvider: RestProvider
     ) {
       this.isPickupRequested = false;
       this.isMainMarkerActivated = false;
       this.isTwoMarkers = false;
       this.countMarkers = 1;
+      //this.checkpoints = this.restProvider.getCheckpointsFromLine();
+
+      
     }
+
+    
 
 
     ionViewDidLoad() {
-    
+      
+
       this.getPositionCenter();
       
       //this.watchPositionCenter();
@@ -110,12 +129,20 @@ export class HomePage {
         .then(() => {
           console.log('Map is ready!');
 
+          this.map.addPolyline({
+            points: AIR_PORTS,
+            'color' : '#AA00FF',
+            'width': 10,
+            'geodesic': true
+          });
+
           this.map.on(GoogleMapsEvent.MAP_LONG_CLICK)
           .subscribe(
             (data) => {
                 //data.latLng.lat();  
                 //this.addMainMarker();
                 alert('MAP_LONG_CLICK');
+                
                 //alert(data.lat +','+data.lng);
             })
           //this.addMainMarker();
@@ -129,7 +156,7 @@ export class HomePage {
         this.getPositionCenter();
         this.activateMarker();
         let markerOptions: MarkerOptions = {
-          title: 'GRC APP version 2.7',
+          title: 'GRC APP version 2.8',
           icon: 'blue',
           animation: 'BOUNCE',
           position: {
