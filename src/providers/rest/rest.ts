@@ -44,6 +44,7 @@ export class RestProvider {
   }
 
   getLines() {
+    this.lines = [];
     this.receiveLines()
     .then(data => {
       if(isArray(data)){
@@ -58,6 +59,7 @@ export class RestProvider {
   }
 
   getCheckpointsFromLine(line_id) {
+    this.checkpoints = [];
     this.receiveCheckpointsFromLine(line_id)
     .then(data => {
       if(isArray(data)){

@@ -20,6 +20,7 @@ import { PickupComponent } from '../components/pickup/pickup';
 import { MapComponent } from '../components/map/map';
 
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { ShowMapPage } from '../pages/show-map/show-map';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     NotificationPage,
     TabsPage,
     PickupComponent,
-    MapComponent
+    MapComponent,
+    ShowMapPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     MyLocationPage,
     LinesPage,
     NotificationPage,
-    TabsPage
+    TabsPage,
+    ShowMapPage
   ],
   providers: [
     StatusBar,

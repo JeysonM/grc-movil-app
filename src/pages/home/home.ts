@@ -41,7 +41,6 @@ export class HomePage {
   originAndDestiny: PairLocation = new PairLocation();
   watch: any;
   marker: Marker;
-  checkpoints: Checkpoint[];
   public isPickupRequested: boolean;
   public isMainMarkerActivated: boolean;
   public isTwoMarkers: boolean;

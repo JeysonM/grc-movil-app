@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
 import { LoadingController } from 'ionic-angular';
 import { Line } from '../../models/line';
+import { ShowMapPage } from '../show-map/show-map';
 
 /**
  * Generated class for the LinesPage page.
@@ -43,6 +44,10 @@ export class LinesPage {
   updateLines(){
     console.log(this.searchQuery);
     this.lines = this.restProvider.filterLines(this.searchQuery);
+  }
+
+  goToShowMap(line: Line){
+    this.navCtrl.push(ShowMapPage, {'line': line})
   }
 
   
