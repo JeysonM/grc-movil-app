@@ -13,8 +13,9 @@ import { Checkpoint } from '../../models/checkpoint';
 @Injectable()
 export class RestProvider {
 
-  apiUrl: string = 'http://localhost:3000/api/v1';
-  
+  //apiUrl: string = 'http://localhost:3000/api/v1'; 
+  apiUrl: string = 'https://grc-web-app.herokuapp.com/api/v1';
+
   restProvider: any;
   lines: Line[] = new Array();
   checkpoints: Checkpoint[] = new Array();

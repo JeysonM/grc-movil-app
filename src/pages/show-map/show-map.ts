@@ -18,15 +18,6 @@ import { Location } from '../../models/location';
 
 
 declare var google;
-var HND_AIR_PORT = {lat: -17.393603098541814, lng: -66.27667665481567};
-      var SFO_AIR_PORT = {lat: -17.393029755856787, lng: -66.2700891494751};
-      var HNL_AIR_PORT = {lat: -17.39291713476104, lng: -66.26922011375427};
-      var AIR_PORTS = [
-        HND_AIR_PORT,
-        HNL_AIR_PORT,
-        SFO_AIR_PORT
-      ];
-
 
 /**
  * Generated class for the ShowMapPage page.
@@ -44,16 +35,13 @@ export class ShowMapPage {
 
   line: Line;
   checkpoints: Checkpoint[];
+  route: any[] = [];
 
   map: any;
   location: Location = new Location();
   watch: any;
   marker: Marker;
-  public isPickupRequested: boolean;
-  public isMainMarkerActivated: boolean;
-  public isTwoMarkers: boolean;
-  public countMarkers: number;
-  public isMapIdle:boolean;
+
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -64,15 +52,10 @@ export class ShowMapPage {
             ) {
     this.line = navParams.get('line');
     this.checkpoints = this.prepareCheckpoints();
-    
-    this.isPickupRequested = false;
-    this.isMainMarkerActivated = false;
-    this.isTwoMarkers = false;
-    this.countMarkers = 1;
   }
 
   ionViewDidLoad() {
-    
+    this.getPositionCenter();
   }
 
   prepareCheckpoints(){
@@ -132,10 +115,12 @@ export class ShowMapPage {
       .then(() => {
         console.log('Map is ready!');
 
+        this.initRoute();
+        
         this.map.addPolyline({
-          points: AIR_PORTS,
+          points: this.route,
           'color' : '#AA00FF',
-          'width': 10,
+          'width': 5,
           'geodesic': true
         });
 
@@ -153,105 +138,23 @@ export class ShowMapPage {
       });
   }
 
-  addMainMarker(){
-    if(this.isMainMarkerActivated != true){
-
-      this.getPositionCenter();
-      this.activateMarker();
-      let markerOptions: MarkerOptions = {
-        title: 'GRC APP version 2.8',
-        icon: 'blue',
-        animation: 'BOUNCE',
-        position: {
-          lat: this.location.latitude,
-          lng: this.location.longitude
-        },
-        draggable: true
-      }
-
-      this.map.addMarker(markerOptions)
-        .then(marker => {
-          this.marker = marker;
-
-          marker.on(GoogleMapsEvent.MARKER_DRAG_END)
-          .subscribe(() => {
-            console.log(marker);
-          });
-
-          marker.on(GoogleMapsEvent.MARKER_CLICK)
-            .subscribe(() => {
-              this.location.latitude = marker.getPosition().lat;
-              this.location.longitude = marker.getPosition().lng;
-              if(this.isTwoMarkers != true){
-                this.addMarkerToTap(this.location.latitude,this.location.longitude);
-                this.increaseMarkerCounter();
-              }
-            });
-      });
-    }
-    
-  }
-
-  addMarkerToTap(lati,longi){
-
-    let markerOptions2: MarkerOptions = {
-      title: 'Origin',
-      icon: 'assets/icon/pin-init.png',
-      animation: 'BOUNCE',
-      position: {
-        lat: lati,
-        lng: longi
-      }
-    }
-
-    this.map.addMarker(markerOptions2)
-          .then(marker => {
-            this.marker = marker;
-            marker.setTitle(lati+','+longi);
-          });
-  }
-
-
   resetMap(){
     this.map.clear();
-    this.deactivateMarker();
     this.getPositionCenter();
-    this.deactivateMarkerCounter();
   }
 
-  activateMarker(){
-    this.isMainMarkerActivated = true;
-  }
 
-  deactivateMarker(){
-    this.isMainMarkerActivated = false;
-  }
+  initRoute(){
+    this.checkpoints.forEach(checkpoint => {
+      //this.addHospitalMarkerToMarkers(hospital);
+      var pointOptions = {
+        lat: checkpoint.latitude,
+        lng: checkpoint.longitude
+        }
+      // var HND_AIR_PORT = {lat: -17.393603098541814, lng: -66.27667665481567};
   
-  confirmPickup(){
-    this.isPickupRequested = true;
-  }
-
-  cancelPickup(){
-    this.isPickupRequested = false;
-  }
-
-  activateMarkerCounter(){
-    this.isTwoMarkers = true;
-  }
-
-  deactivateMarkerCounter(){
-    this.isTwoMarkers = false;
-    this.countMarkers = 1;
-  }
-
-  increaseMarkerCounter(){
-    if(this.countMarkers != 2){
-      this.countMarkers = this.countMarkers + 1;
-    }
-    else{
-      this.activateMarkerCounter();
-    }
-    
+      this.route.push(pointOptions)
+    });
   }
 
 }
