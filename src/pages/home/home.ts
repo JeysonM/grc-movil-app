@@ -13,21 +13,14 @@ import {
   CameraPosition,
   MarkerOptions,
   Marker,
-  Polyline	
+  Polyline,	
+  LatLng
 } from '@ionic-native/google-maps';
 import { RestProvider } from '../../providers/rest/rest';
 import { Checkpoint } from '../../models/checkpoint';
 
 
 declare var google;
-var HND_AIR_PORT = {lat: -17.393603098541814, lng: -66.27667665481567};
-      var SFO_AIR_PORT = {lat: -17.393029755856787, lng: -66.2700891494751};
-      var HNL_AIR_PORT = {lat: -17.39291713476104, lng: -66.26922011375427};
-      var AIR_PORTS = [
-        HND_AIR_PORT,
-        HNL_AIR_PORT,
-        SFO_AIR_PORT
-      ];
 
 @IonicPage()
 @Component({
@@ -128,23 +121,26 @@ export class HomePage {
         .then(() => {
           console.log('Map is ready!');
 
-          this.map.addPolyline({
-            points: AIR_PORTS,
-            'color' : '#AA00FF',
-            'width': 10,
-            'geodesic': true
-          });
+          this.map.on(GoogleMapsEvent.MAP_CLICK)
+          .subscribe((e) => {
+              const myObj= JSON.parse(e)
+
+              // alert("latLng: " + myObj.lat + ", " + myObj.lng);
+              if(this.isTwoMarkers != true){
+                this.addMarkerToTap(myObj.lat,myObj.lng);
+                this.increaseMarkerCounter();
+              }
+          
+            });
 
           this.map.on(GoogleMapsEvent.MAP_LONG_CLICK)
-          .subscribe(
-            (data) => {
+          .subscribe(() => {
                 //data.latLng.lat();  
                 //this.addMainMarker();
-                alert('MAP_LONG_CLICK');
+                alert('MAP_LONG_CLICK 14');
                 
                 //alert(data.lat +','+data.lng);
             })
-          //this.addMainMarker();
 
         });
     }

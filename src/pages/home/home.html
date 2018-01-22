@@ -5,16 +5,24 @@
         <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-buttons start>
+    <!-- <ion-buttons start>
         <button ion-button [hidden]="!isPickupRequested" (click)="cancelPickup()">
              Cancelar
         </button>
-    </ion-buttons>
+    </ion-buttons> -->
     
     <ion-title>
-      <span [hidden]="isPickupRequested" >GRC</span>
-      <span [hidden]="!isPickupRequested" >Marcando destino</span>
+      <!-- <span [hidden]="isPickupRequested" >GRC</span>
+      <span [hidden]="!isPickupRequested" >Marcando destino</span> -->
+      <ion-searchbar [(ngModel)]="searchQuery" placeholder="Buscar tu destino..." animated="true" showCancelButton="true"></ion-searchbar>
     </ion-title>
+
+    <!-- <ion-buttons end>
+      <button ion-button >
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons> -->
+    
   </ion-navbar>
 </ion-header>
 
