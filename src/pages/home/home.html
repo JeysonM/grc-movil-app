@@ -14,7 +14,7 @@
     <ion-title>
       <!-- <span [hidden]="isPickupRequested" >GRC</span>
       <span [hidden]="!isPickupRequested" >Marcando destino</span> -->
-      <ion-searchbar [(ngModel)]="searchQuery" placeholder="Buscar tu destino..." animated="true" showCancelButton="true"></ion-searchbar>
+      <!-- <ion-searchbar [(ngModel)]="searchQuery" placeholder="Buscar tu destino..." animated="true" showCancelButton="true"></ion-searchbar> -->
     </ion-title>
 
     <!-- <ion-buttons end>
@@ -60,7 +60,7 @@
     <ion-fab-list side="left">
       <!-- <button [hidden]="isPickupRequested" color="secondary" (click)="confirmPickup(); addMainMarker();" ion-fab><ion-icon name="md-pin"></ion-icon></button>
       <button [hidden]="!isPickupRequested" color="calm" (click)="cancelPickup();" ion-fab><ion-icon name="md-pin"></ion-icon></button> -->
-      <button [hidden]="isPickupRequested" color="secondary" (click)="addMainMarker();" ion-fab><ion-icon name="md-pin"></ion-icon></button>
+      <button [hidden]="isPickupRequested" color="secondary" ion-fab><ion-icon name="md-pin"></ion-icon></button>
     </ion-fab-list>
     <ion-fab-list side="top">
       <button color="calm" ion-fab><ion-icon name="ios-navigate"></ion-icon></button>

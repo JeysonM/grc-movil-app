@@ -4,12 +4,6 @@ import { Line } from '../../models/line';
 import { isArray } from 'ionic-angular/util/util';
 import { Checkpoint } from '../../models/checkpoint';
 
-/*
-  Generated class for the RestProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class RestProvider {
 
@@ -79,10 +73,5 @@ export class RestProvider {
       return line.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
     });
   }
-
-
-  // receiveLines(){
-  //   return this.http.get(this.apiUrl+'/lines');
-  // }
 
 }

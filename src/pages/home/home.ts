@@ -51,21 +51,12 @@ export class HomePage {
       this.isMainMarkerActivated = false;
       this.isTwoMarkers = false;
       this.countMarkers = 1;
-      //this.checkpoints = this.restProvider.getCheckpointsFromLine();
-
       
     }
 
-    
-
-
     ionViewDidLoad() {
-      
-
       this.getPositionCenter();
-      
       //this.watchPositionCenter();
-      
     }
   
     getPositionCenter(){
@@ -123,11 +114,10 @@ export class HomePage {
 
           this.map.on(GoogleMapsEvent.MAP_CLICK)
           .subscribe((e) => {
-              const myObj= JSON.parse(e)
-
-              // alert("latLng: " + myObj.lat + ", " + myObj.lng);
+              const clickPosition= JSON.parse(e)
+              
               if(this.isTwoMarkers != true){
-                this.addMarkerToTap(myObj.lat,myObj.lng);
+                this.addMarkerToTap(clickPosition);
                 this.increaseMarkerCounter();
               }
           
@@ -135,75 +125,30 @@ export class HomePage {
 
           this.map.on(GoogleMapsEvent.MAP_LONG_CLICK)
           .subscribe(() => {
-                //data.latLng.lat();  
-                //this.addMainMarker();
                 alert('MAP_LONG_CLICK 14');
-                
-                //alert(data.lat +','+data.lng);
             })
 
         });
-    }
+    }    
 
-    addMainMarker(){
-      if(this.isMainMarkerActivated != true){
-
-        this.getPositionCenter();
-        this.activateMarker();
-        let markerOptions: MarkerOptions = {
-          title: 'GRC APP version 2.8',
-          icon: 'blue',
-          animation: 'BOUNCE',
-          position: {
-            lat: this.location.latitude,
-            lng: this.location.longitude
-          },
-          draggable: true
-        }
-  
-        this.map.addMarker(markerOptions)
-          .then(marker => {
-            this.marker = marker;
-  
-            marker.on(GoogleMapsEvent.MARKER_DRAG_END)
-            .subscribe(() => {
-              console.log(marker);
-            });
-  
-            marker.on(GoogleMapsEvent.MARKER_CLICK)
-              .subscribe(() => {
-                this.location.latitude = marker.getPosition().lat;
-                this.location.longitude = marker.getPosition().lng;
-                if(this.isTwoMarkers != true){
-                  this.addMarkerToTap(this.location.latitude,this.location.longitude);
-                  this.increaseMarkerCounter();
-                }
-              });
-        });
-      }
-      
-    }
-    
-
-    addMarkerToTap(lati,longi){
+    addMarkerToTap(locationMarker){
 
       let markerOptions2: MarkerOptions = {
         title: 'Origin',
         icon: 'assets/icon/pin-init.png',
         animation: 'BOUNCE',
         position: {
-          lat: lati,
-          lng: longi
+          lat: locationMarker.lat,
+          lng: locationMarker.lng
         }
       }
 
       this.map.addMarker(markerOptions2)
             .then(marker => {
               this.marker = marker;
-              marker.setTitle(lati+','+longi);
+              marker.setTitle(locationMarker.lat+','+locationMarker.lng);
             });
     }
-
 
     resetMap(){
       this.map.clear();
@@ -226,19 +171,6 @@ export class HomePage {
 
     cancelPickup(){
       this.isPickupRequested = false;
-    }
-
-    addOriginLocation(coord){
-      //this.watchPositionCenter();
-      this.originAndDestiny.setOrigin(coord);
-    }
-    addDestinyLocation(coord){
-      //this.watchPositionCenter();
-      this.originAndDestiny.setDestiny(coord);
-    }
-
-    cleanLocation(){
-      this.originAndDestiny.cleanValues();
     }
 
     activateMarkerCounter(){
