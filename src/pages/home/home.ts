@@ -34,7 +34,6 @@ export class HomePage {
   originAndDestiny: PairLocation = new PairLocation();
   watch: any;
   marker: Marker;
-  public isPickupRequested: boolean;
   public isMainMarkerActivated: boolean;
   public isTwoMarkers: boolean;
   public countMarkers: number;
@@ -47,7 +46,6 @@ export class HomePage {
       private googleMaps: GoogleMaps,
       public restProvider: RestProvider
     ) {
-      this.isPickupRequested = false;
       this.isMainMarkerActivated = false;
       this.isTwoMarkers = false;
       this.countMarkers = 1;
@@ -56,7 +54,7 @@ export class HomePage {
 
     ionViewDidLoad() {
       this.getPositionCenter();
-      //this.watchPositionCenter();
+      this.watchPositionCenter();
     }
   
     getPositionCenter(){
@@ -163,14 +161,6 @@ export class HomePage {
 
     deactivateMarker(){
       this.isMainMarkerActivated = false;
-    }
-    
-    confirmPickup(){
-      this.isPickupRequested = true;
-    }
-
-    cancelPickup(){
-      this.isPickupRequested = false;
     }
 
     activateMarkerCounter(){
