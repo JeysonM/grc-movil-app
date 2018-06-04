@@ -68,14 +68,8 @@ export class ShowMapPage {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.location.latitude = resp.coords.latitude;
       this.location.longitude = resp.coords.longitude;
-
-      if(this.prepareCheckpoints().length == 0){
-        alert("Por el momento no existe una ruta definida")
-        console.log("Por el momento no existe una ruta definida");
-      }else{
+      // alert("prepare checkpoint: " + this.prepareCheckpoints());
         this.loadMap();
-      }
-      
      }).catch((error) => {
        console.log('Error getting location', error);
      });
@@ -124,14 +118,20 @@ export class ShowMapPage {
       .then(() => {
         console.log('Map is ready!');
 
-        this.initRoute();
-        
-        this.map.addPolyline({
-          points: this.route,
-          'color' : '#AA00FF',
-          'width': 5,
-          'geodesic': true
-        });
+        if(this.checkpoints.length == 0){
+          alert("Por el momento no existe una ruta definida")
+          console.log("Por el momento no existe una ruta definida");
+        }else{
+
+            this.initRoute();
+            
+            this.map.addPolyline({
+              points: this.route,
+              'color' : '#AA00FF',
+              'width': 5,
+              'geodesic': true
+            });
+        }
 
         this.map.on(GoogleMapsEvent.MAP_LONG_CLICK)
         .subscribe(
