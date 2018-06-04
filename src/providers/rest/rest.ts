@@ -4,16 +4,19 @@ import { Line } from '../../models/line';
 import { isArray } from 'ionic-angular/util/util';
 import { Checkpoint } from '../../models/checkpoint';
 import { Observable } from 'rxjs/Observable';
+import { BlockedZone } from '../../models/blockedZone';
 
 @Injectable()
 export class RestProvider {
 
+  
   //apiUrl: string = 'http://localhost:3000/api/v1'; 
   apiUrl: string = 'https://grc-web-app.herokuapp.com/api/v1';
 
   restProvider: any;
   lines: Line[] = new Array();
   checkpoints: Checkpoint[] = new Array();
+  blockedZones: BlockedZone[] = new Array();
   // blockedZoneData: Observable<any>;
 
   constructor(public http: HttpClient) {
@@ -81,6 +84,31 @@ export class RestProvider {
       alert("Solicitud de bloqueo enviado");
 
     });
+  }
+
+  receiveBlockedZones() {
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'/sieges').subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  getBlockedZones() {
+    this.blockedZones = [];
+    this.receiveBlockedZones()
+    .then(data => {
+      if(isArray(data)){
+        data.forEach(bZone => {
+          console.log(bZone);
+          this.blockedZones.push(bZone);
+        });
+      }
+      
+    });
+    return this.blockedZones;
   }
 
 }

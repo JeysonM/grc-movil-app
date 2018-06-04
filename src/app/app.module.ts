@@ -11,6 +11,7 @@ import { MyLocationPage } from '../pages/my-location/my-location';
 import { LinesPage } from '../pages/lines/lines';
 import { NotificationPage } from '../pages/notification/notification';
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -21,6 +22,7 @@ import { MapComponent } from '../components/map/map';
 
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { ShowMapPage } from '../pages/show-map/show-map';
+import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ShowMapPage } from '../pages/show-map/show-map';
     TabsPage,
     PickupComponent,
     MapComponent,
-    ShowMapPage
+    ShowMapPage,
+    BlockedZonesPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { ShowMapPage } from '../pages/show-map/show-map';
     LinesPage,
     NotificationPage,
     TabsPage,
-    ShowMapPage
+    ShowMapPage,
+    BlockedZonesPage
   ],
   providers: [
     StatusBar,

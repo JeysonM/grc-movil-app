@@ -9,6 +9,7 @@ import { HomePage} from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Tabs } from 'ionic-angular/components/tabs/tabs';
+import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,8 +27,8 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 
     this.pages = [
-      { titulo: 'Mapa',         component: TabsPage, icon:'md-map'},
-      { titulo: 'Mi ubicación',   component: MyLocationPage, icon:'md-man'},
+      { titulo: 'Mapa',           component: TabsPage, icon:'md-map'},
+      { titulo: 'Bloqueos',       component: BlockedZonesPage, icon:'ios-hand'},
       { titulo: 'Líneas',         component: LinesPage, icon:'md-bus'},
       { titulo: 'Notificaciones', component: NotificationPage, icon:'md-alert'},
       { titulo: 'Acerca de',      component: AboutPage, icon:'md-people'},
