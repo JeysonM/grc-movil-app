@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController,LoadingController, Platform } from 'ionic-angular';
+import { IonicPage, NavController,LoadingController, Platform, ModalController } from 'ionic-angular';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { PickupComponent } from '../../components/pickup/pickup';
 import { Location } from '../../models/location';
@@ -44,7 +44,8 @@ export class HomePage {
       private geolocation: Geolocation,
       public load: LoadingController,
       private googleMaps: GoogleMaps,
-      public restProvider: RestProvider
+      public restProvider: RestProvider,
+      private modal: ModalController
     ) {
       this.isMainMarkerActivated = false;
       this.isTwoMarkers = false;
@@ -122,8 +123,10 @@ export class HomePage {
             });
 
           this.map.on(GoogleMapsEvent.MAP_LONG_CLICK)
-          .subscribe(() => {
-                alert('MAP_LONG_CLICK 14');
+          .subscribe((e) => {
+                const clickPosition= JSON.parse(e)
+                //alert('MAP_LONG_CLICK 14');
+                this.openModalZoneBlocked(clickPosition);
             })
 
         });
@@ -180,6 +183,17 @@ export class HomePage {
         this.activateMarkerCounter();
       }
       
+    }
+
+
+    openModalZoneBlocked(clickPosition){
+        const myData = {
+          latitude: clickPosition.lat,
+          longitude: clickPosition.lng,
+          typeZoneBlocked: 'nothing'
+        }
+        const myModal = this.modal.create('ModalTypeZoneBlockedPage', { data: myData})
+        myModal.present();
     }
 
 }

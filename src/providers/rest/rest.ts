@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Line } from '../../models/line';
 import { isArray } from 'ionic-angular/util/util';
 import { Checkpoint } from '../../models/checkpoint';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestProvider {
@@ -13,6 +14,7 @@ export class RestProvider {
   restProvider: any;
   lines: Line[] = new Array();
   checkpoints: Checkpoint[] = new Array();
+  // blockedZoneData: Observable<any>;
 
   constructor(public http: HttpClient) {
     console.log('Hello RestProvider Provider');
@@ -71,6 +73,13 @@ export class RestProvider {
   filterLines(searchQuery: String): Line[]{
     return this.lines.filter((line) => {
       return line.name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+    });
+  }
+
+  postZoneBlockedData(blockedZoneData){
+    this.http.post(this.apiUrl+'/sieges/',blockedZoneData).subscribe(data => {
+      alert("Solicitud de bloqueo enviado");
+
     });
   }
 
