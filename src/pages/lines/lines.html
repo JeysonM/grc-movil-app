@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-  <ion-title>Lines</ion-title>
+  <ion-title>Líneas</ion-title>
   </ion-navbar>
 
 
@@ -20,17 +20,15 @@
 <ion-content padding>
 
    <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="updateLines()" placeholder="Busca una línea..." showCancelButton="true"></ion-searchbar>
-  <ion-list>
-      <ion-item *ngFor = "let line of lines">
+  <ion-list *ngFor = "let line of lines">
+      <ion-item>
         <ion-thumbnail item-start>
             <img src="assets/images/{{line.typeOfCar}}.jpg" style="width:125px; height:80px">
         </ion-thumbnail>
         <h2>{{line.name}}</h2>
-        <p><ion-icon item-left name="md-time"></ion-icon>{{line.frequency}} min  
-          <ion-icon item-left name="md-color-palette"></ion-icon>{{line.color}}</p>
-       
-        <button ion-button clear item-end (click)="goToShowMap(line)">Ver</button>
-      </ion-item>
-    </ion-list>
+        <p><ion-icon item-left name="md-trending-up"></ion-icon>{{line.frequency}} min</p> 
+        <button ion-button clear (click)="goToShowMap(line)" item-end>Ver</button>
+      </ion-item> 
+  </ion-list>
 
 </ion-content>

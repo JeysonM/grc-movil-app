@@ -7,13 +7,41 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>línea</ion-title>
+    <ion-title>{{line.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
+    
+    <ion-card>    
+        <ion-card-content style="background-color: #a90ae7"> 
+        
+        </ion-card-content>
+        <ion-row no-padding>
+          <ion-col>
+            <button ion-button clear middle icon-start>
+              <ion-icon name='md-trending-up'></ion-icon>
+              {{line.frequency}} min.
+            </button>
+          </ion-col>
+          <ion-col text-center>
+            <button ion-button clear middle icon-start>
+              <ion-icon name='md-time'></ion-icon>
+              {{line.frequency}} min.
+            </button>
+          </ion-col>
+          <ion-col text-right>
+            <button ion-button clear middle icon-start>
+              <ion-icon name='md-bus'></ion-icon>
+              {{line.typeOfCar}}
+            </button>
+          </ion-col>
+        </ion-row>
+    
+      </ion-card>
+
     <div id="map_canvas"></div>
 
 </ion-content>
