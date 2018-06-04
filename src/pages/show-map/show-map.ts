@@ -52,6 +52,8 @@ export class ShowMapPage {
             ) {
     this.line = navParams.get('line');
     this.checkpoints = this.prepareCheckpoints();
+
+    
   }
 
   ionViewDidLoad() {
@@ -66,7 +68,14 @@ export class ShowMapPage {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.location.latitude = resp.coords.latitude;
       this.location.longitude = resp.coords.longitude;
-      this.loadMap();
+
+      if(this.prepareCheckpoints().length == 0){
+        alert("Por el momento no existe una ruta definida")
+        console.log("Por el momento no existe una ruta definida");
+      }else{
+        this.loadMap();
+      }
+      
      }).catch((error) => {
        console.log('Error getting location', error);
      });
