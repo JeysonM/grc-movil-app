@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { MyLocationPage } from '../pages/my-location/my-location';
 import { LinesPage } from '../pages/lines/lines';
 import { NotificationPage } from '../pages/notification/notification';
+import { RegisterPage } from '../pages/register/register';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,6 +24,15 @@ import { MapComponent } from '../components/map/map';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { ShowMapPage } from '../pages/show-map/show-map';
 import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
+import { LoginPage } from '../pages/login/login';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { FIREBASE_CONFIG } from './app.firebase.config';
+import { MyLocationPageModule } from '../pages/my-location/my-location.module';
+import { RegisterPageModule } from '../pages/register/register.module';
+
 
 @NgModule({
   declarations: [
@@ -30,19 +40,24 @@ import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
     AboutPage,
     ContactPage,
     HomePage,
-    MyLocationPage,
     LinesPage,
     NotificationPage,
     TabsPage,
     PickupComponent,
     MapComponent,
     ShowMapPage,
-    BlockedZonesPage
+    BlockedZonesPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    MyLocationPageModule,
+    RegisterPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +70,9 @@ import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
     NotificationPage,
     TabsPage,
     ShowMapPage,
-    BlockedZonesPage
+    BlockedZonesPage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,
@@ -63,7 +80,9 @@ import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
     Geolocation,
     GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RestProvider
+    RestProvider,
+    AngularFireDatabase,
+    AngularFireAuth
   ]
 })
 export class AppModule {}

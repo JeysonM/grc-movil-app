@@ -1,0 +1,30 @@
+<!--
+  Generated template for the AccountSettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="primary">
+      <ion-title>Account settings</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="profile.name" placeholder="Nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="profile.lastName" placeholder="Apellido"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-input type="numeric" [(ngModel)]="profile.phone" placeholder="Phone"></ion-input>
+        </ion-item>
+      
+    </ion-list>
+    <button ion-button full (click)="updateProfile()" color="secondary">Update Profile</button>
+  </ion-content>

@@ -2,7 +2,6 @@ import { Component , ViewChild} from '@angular/core';
 import { Platform , Nav} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { MyLocationPage } from '../pages/my-location/my-location';
 import { LinesPage } from '../pages/lines/lines';
 import { NotificationPage } from '../pages/notification/notification';
 import { HomePage} from '../pages/home/home';
@@ -10,6 +9,8 @@ import { AboutPage } from '../pages/about/about';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Tabs } from 'ionic-angular/components/tabs/tabs';
 import { BlockedZonesPage } from '../pages/blocked-zones/blocked-zones';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,6 +32,8 @@ export class MyApp {
       { titulo: 'Bloqueos',       component: BlockedZonesPage, icon:'ios-hand'},
       { titulo: 'Líneas',         component: LinesPage, icon:'md-bus'},
       { titulo: 'Notificaciones', component: NotificationPage, icon:'md-alert'},
+      { titulo: 'Login',          component: LoginPage, icon:'md-alert'},
+      { titulo: 'Register',       component: RegisterPage, icon:'md-alert'},
       { titulo: 'Acerca de',      component: AboutPage, icon:'md-people'},
       // { titulo: 'tabs',           component: TabsPage, icon:'md-map'}
     ];

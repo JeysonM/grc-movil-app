@@ -16,6 +16,9 @@
       <span [hidden]="!isPickupRequested" >Marcando destino</span> -->
       <!-- <ion-searchbar [(ngModel)]="searchQuery" placeholder="Buscar tu destino..." animated="true" showCancelButton="true"></ion-searchbar> -->
     </ion-title>
+    <ion-buttons right>
+        <button ion-button icon-only (click)="navCtrl.push('AccountSettingsPage')"><ion-icon name="contact"></ion-icon></button>
+      </ion-buttons>
 
     <!-- <ion-buttons end>
       <button ion-button >

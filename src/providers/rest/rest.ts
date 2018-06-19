@@ -5,6 +5,10 @@ import { isArray } from 'ionic-angular/util/util';
 import { Checkpoint } from '../../models/checkpoint';
 import { Observable } from 'rxjs/Observable';
 import { BlockedZone } from '../../models/blockedZone';
+import { Profile } from '../../models/profile';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireObject } from 'angularfire2/database/interfaces';
 
 @Injectable()
 export class RestProvider {
@@ -17,10 +21,14 @@ export class RestProvider {
   lines: Line[] = new Array();
   checkpoints: Checkpoint[] = new Array();
   blockedZones: BlockedZone[] = new Array();
+  profile: AngularFireObject<Profile>;
   // blockedZoneData: Observable<any>;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient,
+              public angularFireAuth: AngularFireAuth,
+              private angularFireDatabase: AngularFireDatabase) {
     console.log('Hello RestProvider Provider');
+    //this.profile = angularFireDatabase.object('/profile/'+angularFireAuth.auth.currentUser.uid);
   }
 
   receiveLines() {
@@ -109,6 +117,20 @@ export class RestProvider {
       
     });
     return this.blockedZones;
+  }
+
+  getProfile(): Observable<Profile>{
+    return this.profile.valueChanges();
+  }
+
+  createProfile(profile: Profile){
+    this.angularFireAuth.authState.take(1).subscribe(auth => {
+       this.angularFireDatabase.object(`profile/${auth.uid}`).set(profile);
+    })
+  }
+
+  updateProfile(profile:Profile){
+    this.angularFireDatabase.object('/profile/' + this.angularFireAuth.auth.currentUser.uid).update(profile);
   }
 
 }
