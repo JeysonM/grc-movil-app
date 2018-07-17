@@ -31,10 +31,10 @@ export class MyApp {
       { titulo: 'Mapa',           component: TabsPage, icon:'md-map'},
       { titulo: 'Bloqueos',       component: BlockedZonesPage, icon:'ios-hand'},
       { titulo: 'Líneas',         component: LinesPage, icon:'md-bus'},
-      { titulo: 'Notificaciones', component: NotificationPage, icon:'md-alert'},
-      { titulo: 'Login',          component: LoginPage, icon:'md-alert'},
-      { titulo: 'Register',       component: RegisterPage, icon:'md-alert'},
+      { titulo: 'Iniciar sesión',          component: LoginPage, icon:'md-log-in'},
       { titulo: 'Acerca de',      component: AboutPage, icon:'md-people'},
+      //{ titulo: 'Register',       component: RegisterPage, icon:'md-alert'},
+      //{ titulo: 'Notificaciones', component: NotificationPage, icon:'md-alert'},
       // { titulo: 'tabs',           component: TabsPage, icon:'md-map'}
     ];
 

@@ -7,7 +7,10 @@
 <ion-header>
 
     <ion-navbar color="primary">
-      <ion-title>Profile</ion-title>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      <ion-title>Mi perfil</ion-title>
     </ion-navbar>
   
   </ion-header>
@@ -26,5 +29,5 @@
         </ion-item>
       
     </ion-list>
-    <button ion-button full (click)="createProfile()">Create Profile</button>
+    <button ion-button full (click)="createProfile()">Mis Líneas</button>
   </ion-content>
