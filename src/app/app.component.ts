@@ -43,6 +43,17 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      // var notificationOpenedCallback = function(jsonData) {
+      //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      // };
+  
+      // window["plugins"].OneSignal
+      //   .startInit("a27f3d66-303c-4295-b3f9-3962efb7bb1c", "695164644367")
+      //   .handleNotificationOpened(notificationOpenedCallback)
+      //   .endInit();
+
+
     });
   }
 

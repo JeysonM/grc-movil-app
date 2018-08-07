@@ -18,6 +18,7 @@ import {
 } from '@ionic-native/google-maps';
 import { RestProvider } from '../../providers/rest/rest';
 import { Checkpoint } from '../../models/checkpoint';
+import { Line } from '../../models/line';
 
 
 declare var google;
@@ -34,10 +35,25 @@ export class HomePage {
   originAndDestiny: PairLocation = new PairLocation();
   watch: any;
   marker: Marker;
+  //checkpoints: any[] = [];
+  showRoute: any[] = [];
+  linesFound: any[] = [];
+  
+  public frequency: any;
+  public car_type: any;
+  public name_line: any;
+
+  public currentLine: Line;
+
+  public linesFoundIndex = 0
+  public limitLinesFoundIndex = 0
+
   public isMainMarkerActivated: boolean;
   public isTwoMarkers: boolean;
   public countMarkers: number;
   public isMapIdle:boolean;
+
+  public isSelectMode:boolean;
   
     constructor(
       public navCtrl: NavController,
@@ -50,6 +66,17 @@ export class HomePage {
       this.isMainMarkerActivated = false;
       this.isTwoMarkers = false;
       this.countMarkers = 1;
+      this.isSelectMode = false;
+
+      this.frequency = 0.0
+      this.car_type = "unknow"
+      this.name_line = "unknow"
+
+      // this.currentLine.id = 0
+      // this.currentLine.name = ""
+      // this.currentLine.color = ""
+      // this.currentLine.frequency = 0
+      // this.currentLine.typeOfCar = "tipo"
       
     }
 
@@ -156,6 +183,21 @@ export class HomePage {
       this.deactivateMarker();
       this.getPositionCenter();
       this.deactivateMarkerCounter();
+      this.deactivateSelectMode();
+      this.resetLinesFound()
+    }
+
+    resetLinesFound(){
+      this.linesFound = [];
+      this.showRoute = [];
+    }
+
+    activateSelectMode(){
+      this.isSelectMode = true;
+    }
+
+    deactivateSelectMode(){
+      this.isSelectMode = false;
     }
 
     activateMarker(){
@@ -194,6 +236,76 @@ export class HomePage {
         }
         const myModal = this.modal.create('ModalTypeZoneBlockedPage', { data: myData})
         myModal.present();
+    }
+
+    searchRoute(){
+      this.linesFound = this.restProvider.getLinesFound();
+      this.limitLinesFoundIndex = this.linesFound.length
+      this.drawRoute()
+    }
+
+    previous(){
+      if(this.linesFound.length != 0){
+        this.linesFoundIndex --;
+        if (this.linesFoundIndex < 0 ){
+          this.linesFoundIndex = 0
+        }
+        this.drawRoute()
+      }
+    }
+
+    next(){
+      if(this.linesFound.length != 0){
+        this.linesFoundIndex ++;
+        if (this.linesFoundIndex >= this.limitLinesFoundIndex ){
+            this.linesFoundIndex = this.limitLinesFoundIndex - 1
+        }
+        this.drawRoute()
+      }
+    }
+
+    prepareCurrentLine(){
+      this.frequency = this.linesFound[this.linesFoundIndex].frequency
+      this.car_type = this.linesFound[this.linesFoundIndex].typeOfCar
+      this.name_line = this.linesFound[this.linesFoundIndex].name
+    }
+
+    initRoute(){
+      this.showRoute = []
+      this.linesFound[this.linesFoundIndex].route.forEach(checkpoint => {
+          var pointOptions = {
+            lat: checkpoint.latitude,
+            lng: checkpoint.longitude
+            }
+      
+          this.showRoute.push(pointOptions)
+      });
+    }
+
+    initRouteTest(){
+      this.showRoute = []
+      
+      this.linesFound[this.linesFoundIndex].route.forEach(checkpoint => {
+          var pointOptions = {
+            lat: checkpoint.latitude,
+            lng: checkpoint.longitude
+            }
+      
+          this.showRoute.push(pointOptions)
+      });
+    }
+
+    drawRoute(){
+      this.map.clear();
+      this.activateSelectMode()
+      this.initRouteTest();
+      this.prepareCurrentLine() 
+        this.map.addPolyline({
+          points: this.showRoute,
+          'color' : this.linesFound[this.linesFoundIndex].color,
+          'width': 5,
+          'geodesic': true
+        });
     }
 
 }

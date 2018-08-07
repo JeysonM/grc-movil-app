@@ -4,74 +4,73 @@
     <button ion-button [hidden]="isPickupRequested" menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-
-    <!-- <ion-buttons start>
-        <button ion-button [hidden]="!isPickupRequested" (click)="cancelPickup()">
-             Cancelar
-        </button>
-    </ion-buttons> -->
     
     <ion-title>
-      <!-- <span [hidden]="isPickupRequested" >GRC</span>
-      <span [hidden]="!isPickupRequested" >Marcando destino</span> -->
-      <!-- <ion-searchbar [(ngModel)]="searchQuery" placeholder="Buscar tu destino..." animated="true" showCancelButton="true"></ion-searchbar> -->
+      <span [hidden]="!isSelectMode" > {{ name_line }}</span>
     </ion-title>
     <ion-buttons right>
         <button ion-button icon-only (click)="navCtrl.push('AccountSettingsPage')"><ion-icon name="contact"></ion-icon></button>
       </ion-buttons>
-
-    <!-- <ion-buttons end>
-      <button ion-button >
-          <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons> -->
     
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <!-- <div id="map"></div> -->
-  <!-- <div class="map-wrapper">
-      <map [isPickupRequested]="isPickupRequested"></map>
-  </div> -->
-  
-  <!-- <ion-card>
-  
-    <ion-card-content>
-      <p>Origen: {{originAndDestiny.origin | json }}</p>
-      <p>Destino: {{originAndDestiny.destiny | json}}</p>
+
+  <ion-card [hidden]="!isSelectMode" >    
+    <ion-card-content style="background-color: #a90ae7"> 
+    
     </ion-card-content>
-  
-  </ion-card> -->
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear middle icon-start>
+          <ion-icon name='md-trending-up'></ion-icon>
+          <!-- 15 min. -->
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear middle icon-start>
+          <ion-icon name='md-time'></ion-icon>
+          {{ frequency }} min.
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear middle icon-start>
+          <ion-icon name='md-bus'></ion-icon>
+          {{ car_type }}
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
 
   <div id="map_canvas"></div>
-  
-  
+
   <pickup [map]="map" [isPinSet]="isMapIdle"></pickup>
-  <!-- <ion-fab top right edge>
-    <button ion-fab mini><ion-icon name="add"></ion-icon></button>
-    <ion-fab-list>
-      <button ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
-      <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
-      <button ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
-      <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+
+  <ion-fab left bottom>
+    <button ion-fab color="secondary"><ion-icon name="arrow-dropright"></ion-icon></button>
+    <ion-fab-list side="right">
+      <button color="calm" (click)="searchRoute()" ion-fab><ion-icon name="ios-navigate"></ion-icon></button>
+      <button color="danger" (click)="resetMap()" ion-fab><ion-icon name="md-remove"></ion-icon></button>
+      <button (click)="previous()" ion-fab><ion-icon name="md-arrow-dropleft"></ion-icon></button>
+      <button (click)="next()" ion-fab><ion-icon name="md-arrow-dropright"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- <ion-fab center bottom>
+    <button ion-fab ><ion-icon name="md-arrow-dropup"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button [hidden]="isPickupRequested" ion-fab><ion-icon name="md-arrow-dropleft"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button (click)="searchRoute()" ion-fab><ion-icon name="md-arrow-dropright"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="top">
+      <button color="danger" (click)="resetMap()" ion-fab><ion-icon name="md-remove"></ion-icon></button>
     </ion-fab-list>
   </ion-fab> -->
 
-  <ion-fab center bottom>
-    <button ion-fab ><ion-icon name="md-arrow-dropup"></ion-icon></button>
-    <ion-fab-list side="left">
-      <!-- <button [hidden]="isPickupRequested" color="secondary" (click)="confirmPickup(); addMainMarker();" ion-fab><ion-icon name="md-pin"></ion-icon></button>
-      <button [hidden]="!isPickupRequested" color="calm" (click)="cancelPickup();" ion-fab><ion-icon name="md-pin"></ion-icon></button> -->
-      <button [hidden]="isPickupRequested" color="secondary" ion-fab><ion-icon name="md-pin"></ion-icon></button>
-    </ion-fab-list>
-    <ion-fab-list side="top">
-      <button color="calm" ion-fab><ion-icon name="ios-navigate"></ion-icon></button>
-    </ion-fab-list>
-    <ion-fab-list side="right">
-      <button color="danger" (click)="resetMap()" ion-fab><ion-icon name="md-remove"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
 </ion-content>
 
 
